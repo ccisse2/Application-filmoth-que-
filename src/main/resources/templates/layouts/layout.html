@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- Déclaration du fragment principal – le layout layout-filmotheque -->
+<!-- Paramétrer le layout pour des valeurs dynamiques -->
+<!-- Rendre variable le contenu de la page -->
+<!-- Rendre variable le titre de la page -->
+<!-- Permettre d’ajouter ou non des ressources CSS -->
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-fragment="layout-filmotheque(titrePage, contenuPage, ressourcesSupp)">
+<head>
+<meta charset="UTF-8">
+<title data-th-replace="${titrePage}"data-th-text="#{nom-application}"></title>
+
+<!-- Déclaration des CSS par défaut : -->
+<link rel="stylesheet" data-th-href="@{/css/layout.css}">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<!-- Permettre d’ajouter ou non des ressources CSS -->
+<th:block data-th-replace="${ressourcesSupp} ?: ~{}"></th:block>
+
+<link rel="icon" data-th-href="@{/images/logoENI.png}" sizes="32x32">
+</head>
+<body>
+	<!-- Intégration du fragment d'entête -->
+	<div data-th-replace="~{fragments/fragment-entete :: frag-entete}"></div>
+
+	<!-- Rendre variable le contenu de la page -->
+	<main data-th-replace="${contenuPage} ?: ~{}">Contenu de la page
+	</main>
+
+	<!-- Intégration du fragment de pied de page -->
+	<div data-th-replace="~{fragments/fragment-piedpage :: frag-piedpage}"></div>
+</body>
+</html>

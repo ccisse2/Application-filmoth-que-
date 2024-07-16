@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-filmotheque( 
+					titrePage=~{:: title},
+					contenuPage=~{:: main},
+					ressourcesSupp=~{:: #ressources-css})}">
+
+<head>
+<!-- Films comme titre de page -->
+<title data-th-text="#{view-films.title}"></title>
+<!-- Ajout de CSS tp-table.css -->
+<th:block id="ressources-css">
+	<link rel="stylesheet" data-th-href="@{/css/tp-table.css}">
+</th:block>
+
+</head>
+<body>
+	<main>
+		<h1 data-th-text="#{view-films.h1}"></h1>
+		<table>
+			<!-- build html table based on users -->
+			<thead>
+				<tr>
+					<th data-th-text="#{view-films.th.genre}"></th>
+					<th data-th-text="#{view-films.th.annee}"></th>
+					<th data-th-text="#{view-films.th.titre}"></th>
+					<th data-th-text="#{view-films.th.realisateur}"></th>
+					<th data-th-text="#{view-films.th.actions}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-th-each="film : ${films}">
+					<td data-th-text="${film.genre.titre}"></td>
+					<td data-th-text="${film.annee}"></td>
+					<td data-th-text="${film.titre}"></td>
+					<td
+						data-th-text="${film.realisateur.prenom} + ' ' + ${film.realisateur.nom}"></td>
+					<td>
+						<a data-th-href="@{/films/detail(id=${film.id})}" data-th-text="#{view-films.th.actions.detail}"></a>
+
+						<th:block data-th-if="${#authorization.expression('isAuthenticated()')}">
+							<a data-th-href="@{/avis/creer(idFilm=${film.id})}" data-th-text="#{view-films.th.actions.avis}"></a>
+						</th:block>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+</body>
+</html>

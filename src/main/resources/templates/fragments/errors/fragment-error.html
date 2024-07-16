@@ -1,0 +1,7 @@
+<!-- Affichage de la liste des messages d'erreur liée au champ courant -->
+<ul xmlns:th="http://www.thymeleaf.org"
+	data-th-fragment="frag-error(inputName)" class="cards"
+	data-th-if="${#fields.hasErrors(inputName)}">
+	<li data-th-each="err: ${#fields.errors(inputName)}"
+		data-th-text="${err}"></li>
+</ul>

@@ -1,0 +1,97 @@
+<form xmlns:th="http://www.thymeleaf.org"
+	data-th-fragment="frag-film-form(titreForm, action)"  data-th-action="@{${action}}" method="post" data-th-object="${film}">
+	<h1 data-th-text="${titreForm}"></h1>
+	<th:block data-th-if="${!#strings.isEmpty(action)}">
+		<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
+	</th:block>
+
+	<ul class="flex-outer">
+		<li>
+			<label for="inputGenre" data-th-text="#{frag-film-form.genre}"> </label>
+			<!-- Utilisation d'un test pour différencier les 2 blocs -->
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<select id="inputGenre" data-th-field="*{genre}">
+					<option data-th-each="genre : ${genresEnSession}"
+						data-th-text="${genre.titre}" data-th-value="${genre.id}"></option>
+				</select>
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('genre')}"></div>
+			</th:block>
+			<th:block data-th-if="${#strings.isEmpty(action)}">
+				<input type="text" id="inputGenre" data-th-disabled="${#strings.isEmpty(action)}"
+					data-th-field="*{genre.titre}" required />
+			</th:block>
+		</li>
+		<li>
+			<label for="inputYear" data-th-text="#{frag-film-form.annee}"></label>
+			<input type="number" id="inputYear" data-th-disabled="${#strings.isEmpty(action)}"
+				data-th-field="*{annee}" min="1900" max="2100" required />
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('annee')}"></div>
+			</th:block>
+		</li>
+		<li>
+			<label for="inputTitle" data-th-text="#{frag-film-form.titre}"> </label>
+			<input type="text" id="inputTitle" data-th-disabled="${#strings.isEmpty(action)}"
+					data-th-field="*{titre}" required />
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('titre')}"></div>
+			</th:block>
+		</li>
+		<li>
+			<label for="inputDirector" data-th-text="#{frag-film-form.realisateur}"> </label>
+			<!-- Utilisation d'un test pour différencier les 2 blocs -->
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<select id="inputDirector" data-th-field="*{realisateur}">
+					<th:block
+						data-th-replace="~{fragments/fragment-participants-form :: frag-participants-form}">
+					</th:block>
+				</select>
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('realisateur')}"></div>
+			</th:block>
+			<th:block data-th-if="${#strings.isEmpty(action)}">
+				<input type="text" id="inputDirector" data-th-disabled="${#strings.isEmpty(action)}"
+					data-th-value="${film.realisateur.prenom} + ' ' + ${film.realisateur.nom}" />
+			</th:block>
+		</li>
+		<li>
+			<label for="inputDuration" data-th-text="#{frag-film-form.duree}"></label>
+			<input type="number" id="inputDuration" data-th-disabled="${#strings.isEmpty(action)}"
+				data-th-field="*{duree}" min="1" />
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('duree')}"></div>
+			</th:block>
+		</li>
+		<li>
+			<label for="selectActors" data-th-text="#{frag-film-form.acteurs}"></label>
+			<!-- Utilisation d'un test pour différencier les 2 blocs -->
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<select data-th-field="*{acteurs}" id="selectActors" multiple>
+					<th:block
+						data-th-replace="~{fragments/fragment-participants-form :: frag-participants-form}">
+					</th:block>
+				</select>
+			</th:block>
+			<th:block data-th-if="${#strings.isEmpty(action) && not #lists.isEmpty(film.acteurs)}">
+				<select id="selectActors" disabled multiple="multiple">
+					<option data-th-each="item : ${film.acteurs}"
+						data-th-text="'- ' + ${item.prenom} + ' ' + ${item.nom}"></option>
+				</select>
+			</th:block>
+		</li>
+		<li>
+			<label for="taSynopsis" data-th-text="#{frag-film-form.synopsis}"> </label>
+			<textarea id="taSynopsis" data-th-disabled="${#strings.isEmpty(action)}"
+					data-th-field="*{synopsis}" rows="3" maxlength="250">
+			</textarea>
+			<th:block data-th-if="${!#strings.isEmpty(action)}">
+				<div data-th-replace="~{fragments/errors/fragment-error :: frag-error('synopsis')}"></div>
+			</th:block>
+		</li>
+		<th:block data-th-if="${#strings.isEmpty(action) && not #lists.isEmpty(film.avis)}">
+			<li data-th-replace="~{fragments/fragment-avis :: frag-avis}"></li>
+		</th:block>
+		<li data-th-if="${!#strings.isEmpty(action)}">
+			<button type="submit" data-th-text="#{frag-film-form.enregistrer}"></button>
+		</li>
+	</ul>
+</form>

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+main a:link, main a:visited {
+	background-color: #008080;
+	color: white;
+	padding: 14px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+main a:hover, main a:active {
+	background-color: #004040;
+}

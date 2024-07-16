@@ -1,0 +1,8 @@
+<li xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-avis" >
+	<label data-th-text="#{frag-avis.label}"></label>
+	<ul>
+		<li data-th-each="avis : ${film.avis}" 
+			data-th-text="${avis.commentaire + '['+avis.note+'] - ('+avis.membre.prenom+')'}">
+		</li>
+	</ul>
+</li>

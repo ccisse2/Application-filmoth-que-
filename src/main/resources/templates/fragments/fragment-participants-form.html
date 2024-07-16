@@ -1,0 +1,5 @@
+<option xmlns:th="http://www.thymeleaf.org"
+	data-th-fragment="frag-participants-form"
+	data-th-each="participant : ${participantsEnSession}"
+	data-th-text="${participant.prenom} + ' ' + ${participant.nom}"
+	data-th-value="${participant.id}"></option>
